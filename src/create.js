@@ -8,7 +8,7 @@
  */
 function pre_create_(){
   //check whether the format of the target table is in the designated one.
-  const format_warning = Browser.msgBox('Make sure that the first row comprises as follows: 開始日時, 開始時刻, 終了日時, 終了時刻, タイトル, 場所, 説明.',Browser.Buttons.YES_NO_CANCEL);
+  const format_warning = Browser.msgBox('Make sure that the first row comprises as follows: 開始日時(*date format), 開始時刻(*time format), 終了日時(*date format), 終了時刻(*time format), タイトル, 場所, 説明.',Browser.Buttons.YES_NO_CANCEL);
   if (format_warning === 'cancel'){
     Browser.msgBox(`Checking format is cancelled.`);
     return;
@@ -40,18 +40,12 @@ function pre_create_(){
       let end_cell = `${head_end_column}${last_row}`;
 
       let check_cell = Browser.msgBox(`The range (cell of "開始日時" : last cell of "説明" column) is designated as ${start_cell} : ${end_cell}.`,Browser.Buttons.YES_NO_CANCEL);
-      while (check_cell !== 'yes'){
-          if(check_cell === 'cancel'){
-            Browser.msgBox(`designating the range is cancelled.`);
-            return;
-          } else if (check_cell === 'no'){
-            start_cell = Browser.inputBox('Set s cell with "開始日時" manually.',Browser.Buttons.OK_CANCEL);
-            end_cell = Browser.inputBox('Set s cell with "説明" manually.',Browser.Buttons.OK_CANCEL);
-            if(start_cell === 'cancel' || end_cell === 'cancel'){
-              Browser.msgBox(`Inputting start cell and end cell manulally is cancelled.`);
-              return;
-            }
-          }
+      if (check_cell === 'no'){
+        start_cell = Browser.inputBox('Set cell with "開始日時" manually.',Browser.Buttons.OK_CANCEL);
+        end_cell = Browser.inputBox('Set last cell of "説明" column manually.',Browser.Buttons.OK_CANCEL);
+      } else if(check_cell === 'cancel'){
+        Browser.msgBox(`designating the range is cancelled.`);
+        return;
       }
       
       let check_send_email = Browser.msgBox('Do you want to share target events with guests and send an email to them?',Browser.Buttons.YES_NO_CANCEL);
@@ -263,18 +257,26 @@ function create_events() {
         //Since the first array is the header of the data, "i" starts with 1. 
         for (i=1; i<data.length; i++) {
           let start_date = new Date(data[i][start_date_col]);
-
+          // let start_date = new Date (Utilities.formatDate(data[i][start_date_col],"GMT","yyyy/MM/dd"));
+          
           //Pushes start_date to the variable, "event_date"
           event_dates.push((start_date.getMonth() + 1) + "/" + start_date.getDate()); //store start date for send an email to guests
           
           let end_date = new Date(data[i][end_date_col]);
+          // let end_date = new Date (Utilities.formatDate(data[i][end_date_col],"GMT","yyyy/MM/dd"));
           let start_time = data[i][start_time_col];
           let end_time = data[i][end_time_col];
           if(start_time !=='' && end_time !== ''){
-            console.log('start_time and end_time do exist.')
+            console.log('start_time and end_time do exist.');
+            // start_time = new Date (Utilities.formatDate(data[i][start_time_col],"GMT","HH:mm"));
+            // end_time = new Date (Utilities.formatDate(data[i][end_time_col],"GMT","HH:mm"));
             start_time = new Date(data[i][start_time_col]);
             end_time = new Date(data[i][end_time_col]);
           }
+
+          console.log(start_date,start_time);
+
+          
           let title = data[i][title_col];
           let location = data[i][location_col];
           let description = data[i][description_col];      
