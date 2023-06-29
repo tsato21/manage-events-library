@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+  </head>
+  <body>
+    <p><?= guest_name ?>さんへ</p>
+    以下のイベントをGoogle Calendarで作成し、共有しました。
+    <br>
+    ご自身のGoogle Calendarでご確認をお願いします。
+    <p><strong>【対象日時】</strong></p>
+    <ul>
+    <? for(let i=0; i<event_dates.length; i++) { ?>
+      <li><?= event_dates[i] ?></li>
+    <? } ?>
+    </ul>
+    <p><?= my_name ?></p>
+  </body>
+</html>
