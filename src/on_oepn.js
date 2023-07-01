@@ -32,7 +32,3 @@ function onOpen() {
         .addSeparator()
         .addToUi();
 }
-
-function test(){
-    console.log('test');
-}

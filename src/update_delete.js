@@ -173,21 +173,11 @@ function display_events_period_(pre_values) {
       const contents = [];
       for (i=0; i < event_length; i++) {
         let start = events[i].getStartTime();
-        let start_date = start.getMonth()+1 + '/' + start.getDate();
-        let start_time;
-        if(start.getMinutes() === 0 ){
-          start_time = start.getHours() + ':' + '00';
-        } else {
-          start_time = start.getHours() + ':' + start.getMinutes();
-        }        
+        let start_date = (start.getMonth() + 1).toString().padStart(2, '0') + '/' + start.getDate().toString().padStart(2, '0');
+        let start_time = start.getHours().toString().padStart(2, '0') + ':' + start.getMinutes().toString().padStart(2, '0');    
         let end = events[i].getEndTime();
-        let end_date = end.getMonth()+1 + '/' + end.getDate();
-        let end_time;
-        if(end.getMinutes() === 0){
-          end_time = end.getHours() + ':' + '00';
-        } else {
-          end_time = end.getHours() + ':' + end.getMinutes();
-        }
+        let end_date = (end.getMonth() + 1).toString().padStart(2, '0') + '/' + end.getDate().toString().padStart(2, '0');
+        let end_time = end.getHours().toString().padStart(2, '0') + ':' + end.getMinutes().toString().padStart(2, '0'); 
         let title = events[i].getTitle();
         let location = events[i].getLocation();
         let description = events[i].getDescription();
