@@ -1,1 +1,1 @@
-# manage_events_library
+# manage-events-library
