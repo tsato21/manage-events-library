@@ -138,7 +138,7 @@ function pre_create_(){
         }
         const check_guest_info = Browser.msgBox(message,Browser.Buttons.YES_NO);
         if(check_guest_info === 'no'){
-          Browser.msgBox('Some of the guest_info was wrong. Try again from the start.');
+          Browser.msgBox('Some of the guest_info was wrong. Try again from the beginning.');
           return;
         } else if (check_guest_info === 'yes'){
           return {
